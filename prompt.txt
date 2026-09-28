@@ -1,0 +1,29 @@
+# TASK: Xây dựng Linux Desktop Media Downloader App an toàn (Native GUI)
+
+## Vai trò (Role)
+Bạn là một Kỹ sư Phần mềm kiêm Chuyên gia An toàn thông tin (Application Security Engineer). Hãy tạo mã nguồn hoàn chỉnh cho ứng dụng Desktop chạy trên Linux để tải video từ X/Twitter về ổ đĩa chỉ định.
+
+## Nguyên tắc An toàn Thông tin bắt buộc (Hard Security Constraints)
+1. Tuyệt đối KHÔNG sử dụng `os.system()` hoặc `subprocess.run(shell=True)`. Bắt buộc gọi trực tiếp thư viện Python API: `from yt_dlp import YoutubeDL`.
+2. Input Validation nghiêm ngặt: Xác thực URL bằng Regex Whitelist:
+   `^https:\/\/(?:twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/status\/(\d+)(?:\?.*)?$`
+   Nếu sai định dạng, chặn ngay lập tức và báo lỗi qua UI, không chuyển tiếp xuống tầng xử lý.
+3. Chống Path Traversal: Tên file xuất ra bắt buộc phải bọc theo ID của bài viết (ví dụ: `twitter_{tweet_id}.%(ext)s`), tuyệt đối không dùng tiêu đề hoặc caption của tweet làm tên file.
+4. Chống DoS: Thiết lập `max_filesize` (tối đa 350MB) trong cấu hình yt-dlp và kiểm tra quyền ghi thư mục bằng `os.access(save_dir, os.W_OK)`.
+
+## Yêu cầu Chức năng & Giao diện (UI/UX - Tkinter)
+1. Giao diện cửa sổ native bằng `tkinter` và `ttk`, không phụ thuộc vào web server hay trình duyệt:
+   - Dropdown chọn nền tảng (Twitter / X).
+   - Ô nhập link kèm nút "Dán Link" đọc trực tiếp clipboard (`clipboard_get()`).
+   - Khung hiển thị thư mục đích kèm nút "Chọn ổ đĩa / thư mục" (`filedialog.askdirectory()`).
+   - Thanh tiến trình trạng thái (`ttk.Progressbar(mode="indeterminate")`).
+   - Nút lớn: "TẢI VIDEO VỀ MÁY".
+2. Xử lý bất đồng bộ (Non-blocking UI):
+   - Toàn bộ tác vụ tải file phải chạy trong luồng ngầm (`threading.Thread(daemon=True)`).
+   - Vô hiệu hóa (disable) nút tải trong khi đang tải và bật lại (enable) khi hoàn tất hoặc gặp lỗi.
+   - Hiển thị thông báo kết quả bằng `messagebox.showinfo` hoặc `messagebox.showerror`.
+
+## Yêu cầu Deliverable
+1. File mã nguồn Python duy nhất: `x_downloader.py`.
+2. Hướng dẫn các lệnh cài đặt dependencies trên Linux (`python3-tk`, `ffmpeg`, `yt-dlp`).
+3. File cấu hình Desktop Entry `x-downloader.desktop` chuẩn FreeDesktop để người dùng có thể nhấp đúp chuột mở app từ menu ứng dụng Linux mà không cần mở terminal.

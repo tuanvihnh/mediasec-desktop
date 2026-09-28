@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tooldowmp4"
+version = "3.9.0"
+description = "Media Security Audit & Downloader - Secure, modular media and image processing desktop suite for Linux"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Security Audit Lab"}
+]
+keywords = [
+    "media-downloader", "youtube", "twitter", "pinterest", "vulkan",
+    "ai-upscale", "security-audit", "lossless-trim", "tkinter"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Security",
+]
+dependencies = [
+    "yt-dlp>=2024.03.10",
+    "Pillow>=10.0.0",
+    "requests>=2.28.0",
+]
+
+[project.scripts]
+tooldowmp4 = "main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app_gui*", "core*", "extractors*", "image_engine*", "utils*"]

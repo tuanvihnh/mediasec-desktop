@@ -1,0 +1,4 @@
+# ToolDowMp4 - Python Dependencies
+yt-dlp>=2024.03.10
+Pillow>=10.0.0
+requests>=2.28.0

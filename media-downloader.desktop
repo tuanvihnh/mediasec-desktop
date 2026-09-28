@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Media Security Downloader
+GenericName=Media Audit Tool
+Comment=Kiểm thử an toàn luồng truyền thông & tải media hợp lệ (UX & Automation v3.0)
+Exec=python3 /run/media/vicmember/data/Lab/ToolDowMp4/media_security_downloader.py
+Icon=preferences-system-network
+Terminal=false
+Type=Application
+Categories=Network;Security;System;
+Keywords=media;download;security;audit;hls;dash;yt-dlp;
+StartupNotify=true
+StartupWMClass=media_security_downloader
